@@ -138,8 +138,71 @@
   50%       { box-shadow: 0 0 32px var(--glow), 0 0 6px var(--glow); }
 }
 
+@keyframes ai-glow {
+  0%, 100% { 
+    box-shadow: 
+      0 0 20px oklch(0.72 0.14 175 / 0.3),
+      0 0 40px oklch(0.72 0.14 175 / 0.15),
+      inset 0 0 20px oklch(0.72 0.14 175 / 0.05);
+  }
+  50% { 
+    box-shadow: 
+      0 0 30px oklch(0.72 0.14 175 / 0.4),
+      0 0 60px oklch(0.72 0.14 175 / 0.2),
+      inset 0 0 30px oklch(0.72 0.14 175 / 0.08);
+  }
+}
+
+@keyframes spark-pulse {
+  0%, 100% { 
+    transform: scale(1);
+    filter: drop-shadow(0 0 8px oklch(0.72 0.14 175 / 0.8));
+  }
+  50% { 
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 16px oklch(0.72 0.14 175 / 1));
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fade-in-up {
+  0% { 
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes border-glow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
 @layer utilities {
   .animate-pulse-glow {
     animation: pulse-glow 2.4s ease-in-out infinite;
+  }
+  .animate-ai-glow {
+    animation: ai-glow 3s ease-in-out infinite;
+  }
+  .animate-spark-pulse {
+    animation: spark-pulse 2s ease-in-out infinite;
+  }
+  .animate-shimmer {
+    animation: shimmer 3s ease-in-out infinite;
+    background-size: 200% 100%;
+  }
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+  .animate-border-glow {
+    animation: border-glow 2s ease-in-out infinite;
   }
 }

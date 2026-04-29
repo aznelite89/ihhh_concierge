@@ -8,6 +8,7 @@ import { ActionCard } from "@/components/action-card"
 import { HospitalStatus } from "@/components/hospital-status"
 import { TimeOptimization } from "@/components/time-optimization"
 import { ActionButtons } from "@/components/action-buttons"
+import { AIActionCard } from "@/components/ai-action-card"
 
 interface Message {
   id: number
@@ -141,9 +142,18 @@ export default function ChatPage() {
         waitSaved={25}
       />
       
-      {/* Messages Area */}
-      <main className="flex-1 overflow-y-auto px-4 py-6">
-        <div className="flex flex-col gap-3">
+{/* Premium AI Action Card Showcase */}
+        <div className="px-4 py-3">
+          <AIActionCard 
+            title="AI scheduled your blood test"
+            subtitle="Optimized to reduce your waiting time"
+            status="Confirmed"
+          />
+        </div>
+      
+        {/* Messages Area */}
+        <main className="flex-1 overflow-y-auto px-4 py-6">
+          <div className="flex flex-col gap-3">
           {messages.map((message, index) => {
             const prevMessage = messages[index - 1]
             const showAvatar = !prevMessage || prevMessage.isAI !== message.isAI
