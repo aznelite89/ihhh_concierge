@@ -12,6 +12,8 @@ import { DemoControls } from "./DemoControls"
 
 export function DemoFlow() {
   const [demoStep, setDemoStep] = useState<DemoStep>(DemoStep.PATIENT_PLAN)
+  const [skipPatientAnimation, setSkipPatientAnimation] = useState(false)
+  const [version, setVersion] = useState(0)
 
   useEffect(() => {
     if (demoStep !== DemoStep.PLAN_CONFIRMED) return
@@ -23,21 +25,37 @@ export function DemoFlow() {
 
   const goPrevious = () => {
     const idx = DEMO_STEP_ORDER.indexOf(demoStep)
-    if (idx > 0) setDemoStep(DEMO_STEP_ORDER[idx - 1])
+    if (idx > 0) {
+      setSkipPatientAnimation(false)
+      setDemoStep(DEMO_STEP_ORDER[idx - 1])
+    }
   }
 
   const goNext = () => {
     const idx = DEMO_STEP_ORDER.indexOf(demoStep)
-    if (idx < DEMO_STEP_ORDER.length - 1) setDemoStep(DEMO_STEP_ORDER[idx + 1])
+    if (idx < DEMO_STEP_ORDER.length - 1) {
+      setDemoStep(DEMO_STEP_ORDER[idx + 1])
+    }
   }
 
-  const reset = () => setDemoStep(DemoStep.PATIENT_PLAN)
+  const reset = () => {
+    setSkipPatientAnimation(false)
+    setVersion(v => v + 1)
+    setDemoStep(DemoStep.PATIENT_PLAN)
+  }
+
+  const skipAnimation = () => {
+    if (demoStep === DemoStep.PATIENT_PLAN) {
+      setSkipPatientAnimation(true)
+    }
+  }
 
   const renderScreen = () => {
     switch (demoStep) {
       case DemoStep.PATIENT_PLAN:
         return (
           <PatientPlanScreen
+            skipAnimation={skipPatientAnimation}
             onAcceptPlan={() => setDemoStep(DemoStep.PLAN_CONFIRMED)}
           />
         )
@@ -61,7 +79,7 @@ export function DemoFlow() {
   return (
     <>
       <PhoneShell showInput={demoStep !== DemoStep.CEO_DASHBOARD}>
-        <div key={demoStep}>{renderScreen()}</div>
+        <div key={`${demoStep}-${version}`}>{renderScreen()}</div>
       </PhoneShell>
 
       <DemoControls
@@ -69,6 +87,10 @@ export function DemoFlow() {
         onPrevious={goPrevious}
         onNext={goNext}
         onReset={reset}
+        onSkipAnimation={skipAnimation}
+        canSkipAnimation={
+          demoStep === DemoStep.PATIENT_PLAN && !skipPatientAnimation
+        }
       />
     </>
   )

@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react"
+import { ChevronLeft, ChevronRight, RotateCcw, FastForward } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { DEMO_STEP_ORDER, DemoStep } from "@/constants/demo"
 
@@ -9,9 +9,18 @@ interface DemoControlsProps {
   onPrevious: () => void
   onNext: () => void
   onReset: () => void
+  onSkipAnimation: () => void
+  canSkipAnimation: boolean
 }
 
-export function DemoControls({ step, onPrevious, onNext, onReset }: DemoControlsProps) {
+export function DemoControls({
+  step,
+  onPrevious,
+  onNext,
+  onReset,
+  onSkipAnimation,
+  canSkipAnimation,
+}: DemoControlsProps) {
   const index = DEMO_STEP_ORDER.indexOf(step)
   const canPrev = index > 0
   const canNext = index < DEMO_STEP_ORDER.length - 1
@@ -57,9 +66,23 @@ export function DemoControls({ step, onPrevious, onNext, onReset }: DemoControls
         <div className="w-px h-5 bg-border/60 mx-0.5" />
 
         <button
+          onClick={onSkipAnimation}
+          disabled={!canSkipAnimation}
+          className={cn(
+            "flex items-center justify-center w-8 h-8 rounded-full text-foreground transition-colors",
+            canSkipAnimation ? "hover:bg-secondary" : "opacity-30 cursor-not-allowed"
+          )}
+          aria-label="Skip animation"
+          title="Skip animation"
+        >
+          <FastForward className="w-4 h-4" />
+        </button>
+
+        <button
           onClick={onReset}
           className="flex items-center justify-center w-8 h-8 rounded-full text-foreground hover:bg-secondary transition-colors"
           aria-label="Reset demo"
+          title="Reset demo"
         >
           <RotateCcw className="w-4 h-4" />
         </button>

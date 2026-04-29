@@ -196,6 +196,23 @@
   50% { opacity: 1; }
 }
 
+@keyframes ring-flash-amber {
+  0%   { box-shadow: 0 0 0 0 oklch(0.78 0.16 70 / 0.55); }
+  60%  { box-shadow: 0 0 0 18px oklch(0.78 0.16 70 / 0); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+@keyframes ring-flash-success {
+  0%   { box-shadow: 0 0 0 0 var(--glow); }
+  60%  { box-shadow: 0 0 0 18px oklch(0.72 0.14 175 / 0); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+@keyframes button-pulse-once {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.015); }
+}
+
 @layer utilities {
   .animate-pulse-glow {
     animation: pulse-glow 2.4s ease-in-out infinite;
@@ -215,5 +232,14 @@
   }
   .animate-border-glow {
     animation: border-glow 2s ease-in-out infinite;
+  }
+  .animate-ring-flash-amber {
+    animation: ring-flash-amber 1.4s ease-out 1;
+  }
+  .animate-ring-flash-success {
+    animation: ring-flash-success 1.4s ease-out 1;
+  }
+  .animate-button-pulse-once {
+    animation: button-pulse-once 1.6s ease-in-out 1;
   }
 }
