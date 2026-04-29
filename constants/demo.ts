@@ -47,12 +47,12 @@ export const PATIENT_PLAN_TIMELINE: ReadonlyArray<{
   delayMs: number
 }> = [
   { id: PatientPlanItem.TYPING_1, delayMs: 1000 },
-  { id: PatientPlanItem.MONITORING, delayMs: 5000 },
-  { id: PatientPlanItem.TYPING_2, delayMs: 9000 },
-  { id: PatientPlanItem.DELAY_MESSAGE, delayMs: 11800 },
-  { id: PatientPlanItem.DELAY_CARD, delayMs: 12300 },
-  { id: PatientPlanItem.REORDER_MESSAGE, delayMs: 12800 },
-  { id: PatientPlanItem.BLOODTEST_CARD, delayMs: 13800 },
-  { id: PatientPlanItem.TIME_OPTIMIZATION, delayMs: 14600 },
-  { id: PatientPlanItem.ACTION_BUTTONS, delayMs: 15500 }
+  { id: PatientPlanItem.MONITORING, delayMs: 5000 }, // + 4000
+  { id: PatientPlanItem.TYPING_2, delayMs: 9000 }, // + 4000
+  { id: PatientPlanItem.DELAY_MESSAGE, delayMs: 12000 }, // + 3000
+  { id: PatientPlanItem.DELAY_CARD, delayMs: 13500 }, // + 1500
+  { id: PatientPlanItem.REORDER_MESSAGE, delayMs: 15500 }, // + 2000
+  { id: PatientPlanItem.BLOODTEST_CARD, delayMs: 17500 }, // + 2000
+  { id: PatientPlanItem.TIME_OPTIMIZATION, delayMs: 18500 }, // + 1000
+  { id: PatientPlanItem.ACTION_BUTTONS, delayMs: 19500 } // + 1000
 ]
