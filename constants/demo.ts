@@ -16,7 +16,7 @@ export const DEMO_STEP_ORDER: DemoStep[] = [
   DemoStep.CEO_DASHBOARD
 ]
 
-export const PLAN_CONFIRMED_DURATION_MS = 1500
+export const PLAN_CONFIRMED_DURATION_MS = 10000
 
 export const ActionCardType = {
   RESCHEDULE: "reschedule",
