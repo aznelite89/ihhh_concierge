@@ -10,6 +10,7 @@ import { TimeOptimization } from "@/components/time-optimization"
 import { ActionButtons } from "@/components/action-buttons"
 import { AIActionCard } from "@/components/ai-action-card"
 import { HospitalNavigation } from "@/components/hospital-navigation"
+import { AIDecisionCard } from "@/components/ai-decision-card"
 
 interface Message {
   id: number
@@ -158,6 +159,17 @@ export default function ChatPage() {
             destination="Lab A"
             level="Level 2"
             estimatedTime={2}
+          />
+        </div>
+
+        {/* AI Decision Card */}
+        <div className="px-4 py-3">
+          <AIDecisionCard 
+            title="Your consultation is delayed by 25 minutes"
+            suggestion="Grab a coffee or reschedule?"
+            delayMinutes={25}
+            primaryAction={{ label: "Find nearby coffee" }}
+            secondaryAction={{ label: "Reschedule appointment" }}
           />
         </div>
       
