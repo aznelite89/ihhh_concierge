@@ -27,7 +27,7 @@ export function ChatInput({ onSendMessage }: ChatInputProps) {
   }
 
   return (
-    <div className="sticky bottom-0 bg-background/80 backdrop-blur-xl border-t border-border/50 p-4 pb-8">
+    <div className="bg-background border-t border-border/50 p-4 pb-8">
       <div className="flex items-end gap-3">
         {/* Plus button */}
         <button className="flex-shrink-0 flex items-center justify-center w-11 h-11 rounded-full bg-secondary text-muted-foreground transition-all hover:bg-secondary/80 hover:text-foreground">

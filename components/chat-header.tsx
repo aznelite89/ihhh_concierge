@@ -10,7 +10,7 @@ interface ChatHeaderProps {
 
 export function ChatHeader({ patientName, appointmentInfo, appointmentTime }: ChatHeaderProps) {
   return (
-    <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-xl border-b border-border/50">
+    <header className="z-10 bg-background border-b border-border/50">
       <div className="flex items-center justify-between px-4 py-3">
         <button className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary/50 text-foreground transition-colors hover:bg-secondary">
           <ChevronLeft className="w-5 h-5" />
