@@ -1,7 +1,8 @@
 "use client"
 
+import { useState } from "react"
 import { cn } from "@/lib/utils"
-import { Clock, Coffee, CalendarClock, Sparkles } from "lucide-react"
+import { Clock, Coffee, CalendarClock, Sparkles, Check, Bell } from "lucide-react"
 
 interface AIDecisionCardProps {
   title?: string
@@ -15,6 +16,10 @@ interface AIDecisionCardProps {
     label: string
     onClick?: () => void
   }
+  tertiaryAction?: {
+    label: string
+    onClick?: () => void
+  }
   className?: string
 }
 
@@ -24,8 +29,21 @@ export function AIDecisionCard({
   delayMinutes = 25,
   primaryAction = { label: "Find nearby coffee" },
   secondaryAction = { label: "Reschedule appointment" },
+  tertiaryAction = { label: "Keep my appointment" },
   className,
 }: AIDecisionCardProps) {
+  const [waitingConfirmed, setWaitingConfirmed] = useState(false)
+  const [isConfirming, setIsConfirming] = useState(false)
+
+  const handleKeepAppointment = () => {
+    setIsConfirming(true)
+    // Simulate brief processing
+    setTimeout(() => {
+      setIsConfirming(false)
+      setWaitingConfirmed(true)
+      tertiaryAction?.onClick?.()
+    }, 800)
+  }
   return (
     <div className={cn("p-1", className)}>
       <div className="relative animate-fade-in-up">
@@ -92,14 +110,64 @@ export function AIDecisionCard({
                   <span>{secondaryAction.label}</span>
                 </div>
               </button>
+
+              {/* Tertiary action - keep appointment */}
+              {!waitingConfirmed ? (
+                <button
+                  onClick={handleKeepAppointment}
+                  disabled={isConfirming}
+                  className="group relative w-full px-4 py-2.5 rounded-lg text-muted-foreground text-sm transition-all duration-200 hover:text-foreground hover:bg-[oklch(0.16_0.005_260)] active:scale-[0.98] disabled:opacity-70"
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    {isConfirming ? (
+                      <>
+                        <div className="w-3.5 h-3.5 border-2 border-muted-foreground/30 border-t-muted-foreground rounded-full animate-spin" />
+                        <span>Confirming...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Clock className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity" />
+                        <span>{tertiaryAction.label}</span>
+                      </>
+                    )}
+                  </div>
+                </button>
+              ) : (
+                <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 p-4 animate-fade-in-up">
+                  {/* Success pulse effect */}
+                  <div className="absolute inset-0 bg-primary/5 animate-pulse" style={{ animationDuration: '3s' }} />
+                  
+                  <div className="relative flex items-center gap-3">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
+                      <Check className="w-4 h-4 text-primary animate-check-scale-in" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground">Waiting confirmed</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        You&apos;ll stay in queue. We&apos;ll alert you when it&apos;s your turn.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Notification hint */}
+                  <div className="relative flex items-center gap-2 mt-3 pt-3 border-t border-primary/10">
+                    <Bell className="w-3 h-3 text-primary/70" />
+                    <span className="text-[11px] text-muted-foreground">
+                      Notifications enabled for Dr. Martinez
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
             
-            {/* Bottom helper text */}
-            <div className="mt-5 pt-4 border-t border-[oklch(0.20_0.005_260)]">
-              <p className="text-xs text-muted-foreground text-center">
-                We&apos;ll notify you when the doctor is ready
-              </p>
-            </div>
+            {/* Bottom helper text - only show when not confirmed */}
+            {!waitingConfirmed && (
+              <div className="mt-5 pt-4 border-t border-[oklch(0.20_0.005_260)]">
+                <p className="text-xs text-muted-foreground text-center">
+                  We&apos;ll notify you when the doctor is ready
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
