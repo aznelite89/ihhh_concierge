@@ -420,9 +420,9 @@ function AIMessage({
         <Sparkles className="w-3.5 h-3.5 text-primary" />
       </div>
       <div className="flex-1 py-1">
-        <p className="text-sm text-muted-foreground leading-relaxed">
+        <div className="text-sm text-muted-foreground leading-relaxed">
           {children}
-        </p>
+        </div>
       </div>
     </div>
   )
