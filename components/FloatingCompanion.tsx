@@ -191,21 +191,21 @@ export function FloatingCompanion({
         aria-label="Open patient companion"
         aria-pressed={panelOpen}
       >
-        <span className="relative flex items-center justify-center w-11 h-11 rounded-full overflow-hidden">
-          <span className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/45 via-primary/15 to-transparent" />
-          <span className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,oklch(0.85_0.1_175/0.7),transparent_60%)]" />
+        <span className="relative flex items-center justify-center w-[3.4rem] h-[3.4rem] rounded-full overflow-hidden">
+          <span className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/55 via-primary/20 to-transparent" />
+          <span className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,oklch(0.85_0.1_175/0.75),transparent_65%)]" />
           <svg
             viewBox="0 0 24 24"
-            className="relative w-6 h-6 text-foreground/90"
+            className="relative w-10 h-10 text-foreground"
             aria-hidden="true"
           >
-            <circle cx="9" cy="10.5" r="1.1" fill="currentColor" />
-            <circle cx="15" cy="10.5" r="1.1" fill="currentColor" />
+            <circle cx="8.6" cy="10" r="1.7" fill="currentColor" />
+            <circle cx="15.4" cy="10" r="1.7" fill="currentColor" />
             <path
-              d="M8.6 14.6 Q12 16.6 15.4 14.6"
+              d="M8 14.6 Q12 17.4 16 14.6"
               fill="none"
               stroke="currentColor"
-              strokeWidth="1.2"
+              strokeWidth="1.9"
               strokeLinecap="round"
             />
           </svg>
