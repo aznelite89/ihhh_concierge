@@ -56,3 +56,37 @@ export const PATIENT_PLAN_TIMELINE: ReadonlyArray<{
   { id: PatientPlanItem.TIME_OPTIMIZATION, delayMs: 18500 }, // + 1000
   { id: PatientPlanItem.ACTION_BUTTONS, delayMs: 19500 } // + 1000
 ]
+
+export const CompanionState = {
+  HIDDEN: "HIDDEN",
+  APPEARING: "APPEARING",
+  IDLE: "IDLE",
+  SPEAKING: "SPEAKING",
+  MINIMIZED: "MINIMIZED"
+} as const
+
+export type CompanionState =
+  (typeof CompanionState)[keyof typeof CompanionState]
+
+export const CompanionAction = {
+  EXPLAIN_PLAN: "EXPLAIN_PLAN",
+  GUIDE_ME: "GUIDE_ME",
+  TALK_TO_STAFF: "TALK_TO_STAFF",
+  SPEAK: "SPEAK"
+} as const
+
+export type CompanionAction =
+  (typeof CompanionAction)[keyof typeof CompanionAction]
+
+export const COMPANION_APPEAR_DURATION_MS = 600
+export const COMPANION_SPEECH_DURATION_MS = 5000
+export const COMPANION_LABEL_DURATION_MS = 3000
+
+// Show companion this long after TIME_OPTIMIZATION reveals
+export const COMPANION_REVEAL_AFTER_OPTIMIZATION_MS = 1500
+export const COMPANION_PATIENT_PLAN_REVEAL_MS =
+  PATIENT_PLAN_TIMELINE.find(t => t.id === PatientPlanItem.TIME_OPTIMIZATION)!
+    .delayMs + COMPANION_REVEAL_AFTER_OPTIMIZATION_MS
+
+export const COMPANION_DEFAULT_MESSAGE =
+  "Hi Sarah, I've reorganized your visit to save you 25 minutes."

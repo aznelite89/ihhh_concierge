@@ -1,7 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { DemoStep, DEMO_STEP_ORDER, PLAN_CONFIRMED_DURATION_MS } from "@/constants/demo"
+import {
+  COMPANION_PATIENT_PLAN_REVEAL_MS,
+  DemoStep,
+  DEMO_STEP_ORDER,
+  PLAN_CONFIRMED_DURATION_MS,
+} from "@/constants/demo"
+import { FloatingCompanion } from "@/components/FloatingCompanion"
 import { PhoneShell } from "./PhoneShell"
 import { PatientPlanScreen } from "./PatientPlanScreen"
 import { PlanConfirmedScreen } from "./PlanConfirmedScreen"
@@ -14,6 +20,7 @@ export function DemoFlow() {
   const [demoStep, setDemoStep] = useState<DemoStep>(DemoStep.PATIENT_PLAN)
   const [skipPatientAnimation, setSkipPatientAnimation] = useState(false)
   const [version, setVersion] = useState(0)
+  const [companionVisible, setCompanionVisible] = useState(false)
 
   useEffect(() => {
     if (demoStep !== DemoStep.PLAN_CONFIRMED) return
@@ -22,6 +29,31 @@ export function DemoFlow() {
     }, PLAN_CONFIRMED_DURATION_MS)
     return () => clearTimeout(timer)
   }, [demoStep])
+
+  useEffect(() => {
+    if (demoStep === DemoStep.CEO_DASHBOARD) {
+      setCompanionVisible(false)
+      return
+    }
+
+    if (demoStep !== DemoStep.PATIENT_PLAN) {
+      setCompanionVisible(true)
+      return
+    }
+
+    if (companionVisible) return
+
+    if (skipPatientAnimation) {
+      setCompanionVisible(true)
+      return
+    }
+
+    const t = setTimeout(
+      () => setCompanionVisible(true),
+      COMPANION_PATIENT_PLAN_REVEAL_MS
+    )
+    return () => clearTimeout(t)
+  }, [demoStep, skipPatientAnimation, companionVisible])
 
   const goPrevious = () => {
     const idx = DEMO_STEP_ORDER.indexOf(demoStep)
@@ -40,6 +72,7 @@ export function DemoFlow() {
 
   const reset = () => {
     setSkipPatientAnimation(false)
+    setCompanionVisible(false)
     setVersion(v => v + 1)
     setDemoStep(DemoStep.PATIENT_PLAN)
   }
@@ -78,7 +111,10 @@ export function DemoFlow() {
 
   return (
     <>
-      <PhoneShell showInput={demoStep !== DemoStep.CEO_DASHBOARD}>
+      <PhoneShell
+        showInput={demoStep !== DemoStep.CEO_DASHBOARD}
+        overlay={<FloatingCompanion visible={companionVisible} />}
+      >
         <div key={`${demoStep}-${version}`}>{renderScreen()}</div>
       </PhoneShell>
 

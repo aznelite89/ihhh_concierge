@@ -8,11 +8,12 @@ interface PhoneShellProps {
   children: ReactNode
   showInput?: boolean
   onSendMessage?: (message: string) => void
+  overlay?: ReactNode
 }
 
-export function PhoneShell({ children, showInput = true, onSendMessage }: PhoneShellProps) {
+export function PhoneShell({ children, showInput = true, onSendMessage, overlay }: PhoneShellProps) {
   return (
-    <div className="h-dvh max-w-md mx-auto flex flex-col bg-background overflow-hidden">
+    <div className="relative h-dvh max-w-md mx-auto flex flex-col bg-background overflow-hidden">
       <ChatHeader
         patientName="Sarah Mitchell"
         appointmentInfo="General Checkup"
@@ -22,6 +23,8 @@ export function PhoneShell({ children, showInput = true, onSendMessage }: PhoneS
       <main className="flex-1 min-h-0 overflow-y-auto overscroll-contain no-scrollbar [scrollbar-gutter:stable]">
         {children}
       </main>
+
+      {overlay}
 
       {showInput && <ChatInput onSendMessage={onSendMessage} />}
     </div>
