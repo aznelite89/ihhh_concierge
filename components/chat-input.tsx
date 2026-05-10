@@ -59,6 +59,7 @@ export function ChatInput({ onSendMessage }: ChatInputProps) {
             rows={1}
             className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground text-base resize-none outline-none py-2 max-h-32 leading-normal"
             style={{ height: "auto" }}
+            suppressHydrationWarning
           />
           
           {/* Mic button */}
