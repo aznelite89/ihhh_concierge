@@ -1,8 +1,10 @@
-# Render Blueprint — avoids `corepack enable` (EROFS on /usr/bin in the build image).
+# Render Blueprint — Render's build image has read-only /usr/bin and
+# /usr/lib/node_modules, so neither `corepack enable` nor `npm install -g pnpm`
+# work. `npx` caches under $HOME (writable), so we invoke pnpm via npx.
 # If you manage the service only in the dashboard, copy buildCommand/startCommand from here.
 services:
   - type: web
     name: ihhh_concierge
     runtime: node
-    buildCommand: npm install -g pnpm@9 && pnpm install --frozen-lockfile && pnpm run build
+    buildCommand: npx --yes pnpm@9 install --frozen-lockfile && npx --yes pnpm@9 run build
     startCommand: npm run start
