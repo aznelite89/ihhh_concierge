@@ -1,0 +1,8 @@
+# Render Blueprint — avoids `corepack enable` (EROFS on /usr/bin in the build image).
+# If you manage the service only in the dashboard, copy buildCommand/startCommand from here.
+services:
+  - type: web
+    name: ihhh_concierge
+    runtime: node
+    buildCommand: npm install -g pnpm@9 && pnpm install --frozen-lockfile && pnpm run build
+    startCommand: npm run start
