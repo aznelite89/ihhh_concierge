@@ -171,84 +171,83 @@ export function ConsultationDelayedScreen({
               phase === "confirming" ||
               phase === "confirmed" ? (
                 <>
-                  {/* Alert indicator with delay time */}
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="relative flex-shrink-0">
-                      <div
-                        className={cn(
-                          "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500",
-                          phase === "confirmed"
-                            ? "bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/20"
-                            : "bg-gradient-to-br from-amber-500/20 to-amber-600/10 border border-amber-500/20"
-                        )}
-                      >
-                        {phase === "confirmed" ? (
-                          <Check className="w-5 h-5 text-primary animate-check-scale-in" />
-                        ) : (
-                          <Clock className="w-5 h-5 text-amber-400" />
-                        )}
+                  {phase === "confirmed" ? (
+                    <div className="flex items-start gap-4 mb-6">
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/20 flex-shrink-0">
+                        <Check className="w-5 h-5 text-primary animate-check-scale-in" />
                       </div>
-                      {/* Delay badge */}
-                      {phase !== "confirmed" && (
-                        <div className="absolute -top-1.5 -right-1.5 px-1.5 py-0.5 rounded-md bg-amber-500 text-[10px] font-bold text-black">
-                          +25m
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-[17px] font-semibold text-foreground leading-snug mb-1.5">
+                          Waiting confirmed
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                          You&apos;ll stay in queue. We&apos;ll alert you when it&apos;s your turn.
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      {/* Big delay headline + bell reassurance */}
+                      <div className="flex flex-col items-center text-center gap-2 mb-6">
+                        <div className="flex items-center gap-3">
+                          <h3
+                            className="font-bold text-amber-400 leading-tight"
+                            style={{ fontSize: "32px" }}
+                          >
+                            +25 min delay
+                          </h3>
+                          <Bell
+                            className="w-5 h-5 text-amber-400/70 animate-pulse"
+                            aria-label="We'll tell you when the doctor is ready"
+                          />
                         </div>
-                      )}
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-[17px] font-semibold text-foreground leading-snug mb-1.5">
-                        {phase === "confirmed"
-                          ? "Waiting confirmed"
-                          : "Your consultation is delayed by 25 minutes"}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {phase === "confirmed"
-                          ? "You'll stay in queue. We'll alert you when it's your turn."
-                          : "Grab a coffee or reschedule?"}
-                      </p>
-                    </div>
-                  </div>
+                        <p
+                          className="text-muted-foreground"
+                          style={{ fontSize: "18px" }}
+                        >
+                          Doctor is running late
+                        </p>
+                      </div>
+                    </>
+                  )}
 
                   {/* Action buttons - only show before confirmed */}
                   {phase !== "confirmed" && (
                     <div className="flex flex-col gap-3">
                       {/* Primary action - coffee */}
-                      <button className="group relative w-full px-5 py-3.5 rounded-xl bg-gradient-to-r from-primary to-[oklch(0.65_0.14_175)] text-primary-foreground font-semibold text-[15px] transition-all duration-200 hover:shadow-lg hover:shadow-primary/25 hover:scale-[1.02] active:scale-[0.98]">
+                      <button className="group relative w-full px-5 py-4 rounded-xl bg-gradient-to-r from-primary to-[oklch(0.65_0.14_175)] text-primary-foreground font-semibold transition-all duration-200 hover:shadow-lg hover:shadow-primary/25 hover:scale-[1.02] active:scale-[0.98]" style={{ fontSize: "18px" }}>
                         <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                         <div className="relative flex items-center justify-center gap-2.5">
-                          <Coffee className="w-4 h-4" />
-                          <span>Find nearby coffee</span>
+                          <Coffee className="w-5 h-5" />
+                          <span>Get coffee</span>
                         </div>
                       </button>
 
-                      {/* Secondary action - reschedule */}
-                      <button className="group relative w-full px-5 py-3.5 rounded-xl bg-[oklch(0.18_0.005_260)] border border-[oklch(0.28_0.005_260)] text-foreground font-medium text-[15px] transition-all duration-200 hover:bg-[oklch(0.20_0.005_260)] hover:border-[oklch(0.32_0.005_260)] active:scale-[0.98]">
+                      {/* Primary action - reschedule */}
+                      <button className="group relative w-full px-5 py-4 rounded-xl bg-[oklch(0.18_0.005_260)] border border-[oklch(0.28_0.005_260)] text-foreground font-semibold transition-all duration-200 hover:bg-[oklch(0.20_0.005_260)] hover:border-[oklch(0.32_0.005_260)] active:scale-[0.98]" style={{ fontSize: "18px" }}>
                         <div className="flex items-center justify-center gap-2.5">
-                          <CalendarClock className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-                          <span>Reschedule appointment</span>
+                          <CalendarClock className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                          <span>Reschedule</span>
                         </div>
                       </button>
 
-                      {/* Tertiary action - keep appointment */}
+                      {/* Tertiary - keep appointment as small text link */}
                       <button
                         onClick={handleKeepAppointment}
                         disabled={phase === "confirming"}
-                        className="group relative w-full px-4 py-2.5 rounded-lg text-muted-foreground text-sm transition-all duration-200 hover:text-foreground hover:bg-[oklch(0.16_0.005_260)] active:scale-[0.98] disabled:opacity-70"
+                        className="group mt-1 mx-auto inline-flex items-center justify-center gap-2 px-3 py-2 text-muted-foreground transition-all hover:text-foreground active:scale-[0.98] disabled:opacity-70"
+                        style={{ fontSize: "15px" }}
                       >
-                        <div className="flex items-center justify-center gap-2">
-                          {phase === "confirming" ? (
-                            <>
-                              <div className="w-3.5 h-3.5 border-2 border-muted-foreground/30 border-t-muted-foreground rounded-full animate-spin" />
-                              <span>Confirming...</span>
-                            </>
-                          ) : (
-                            <>
-                              <Clock className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity" />
-                              <span>Keep my appointment</span>
-                            </>
-                          )}
-                        </div>
+                        {phase === "confirming" ? (
+                          <>
+                            <div className="w-3.5 h-3.5 border-2 border-muted-foreground/30 border-t-muted-foreground rounded-full animate-spin" />
+                            <span>Confirming...</span>
+                          </>
+                        ) : (
+                          <span className="underline-offset-4 group-hover:underline">
+                            Keep my appointment
+                          </span>
+                        )}
                       </button>
                     </div>
                   )}
@@ -263,15 +262,6 @@ export function ConsultationDelayedScreen({
                           Notifications enabled for Dr. Martinez
                         </span>
                       </div>
-                    </div>
-                  )}
-
-                  {/* Bottom helper text - only show when not confirmed */}
-                  {phase === "initial" && (
-                    <div className="mt-5 pt-4 border-t border-[oklch(0.20_0.005_260)]">
-                      <p className="text-xs text-muted-foreground text-center">
-                        We&apos;ll notify you when the doctor is ready
-                      </p>
                     </div>
                   )}
                 </>
