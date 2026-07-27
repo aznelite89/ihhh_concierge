@@ -43,6 +43,20 @@
   --glow: oklch(0.72 0.14 175 / 0.25);
   --ai-bubble: oklch(0.16 0.01 175);
   --user-bubble: oklch(0.22 0.005 260);
+
+  /* Lecture Theatre seat map — zone tints mirror the printed IHH floor plan */
+  --map-surface: oklch(0.12 0.005 260);
+  --map-stage: oklch(0.2 0.01 260);
+  --map-fixture: oklch(0.17 0.005 260);
+  --map-fixture-line: oklch(0.28 0.005 260);
+  --map-fixture-text: oklch(0.62 0 0);
+  --map-entrance: oklch(0.18 0.03 175);
+  --seat-priority: oklch(0.45 0.09 305);
+  --seat-standard: oklch(0.5 0.09 155);
+  --seat-general: oklch(0.5 0.08 200);
+  --seat-blocked: oklch(0.2 0.005 260);
+  --seat-assigned-line: oklch(0.85 0 0 / 0.55);
+  --seat-text: oklch(0.96 0 0 / 0.85);
 }
 
 .dark {
@@ -410,5 +424,57 @@
   }
   .animate-icon-float {
     animation: icon-float 2s ease-in-out infinite;
+  }
+}
+
+/* ---------- Event concierge: seat map ---------- */
+
+@keyframes seat-pulse {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.35);
+  }
+}
+
+@keyframes seat-ping {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.7);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+@keyframes seat-callout-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .animate-seat-pulse {
+    animation: seat-pulse 2s ease-in-out infinite;
+  }
+  .animate-seat-ping {
+    animation: seat-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+  .animate-seat-callout-in {
+    animation: seat-callout-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 }
